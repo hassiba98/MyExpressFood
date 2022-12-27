@@ -1,0 +1,33 @@
+{% extends "expressFoodTemplates/base.html"%}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6" >
+            <div>
+                <img src="{{ meal_object.image}}" alt="" width="500px" height="500px">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="text-warning display">
+                {{ meal_object.title}}
+            </div>
+
+            <div class="text-danger display">
+                Prix : {{ meal_object.price}} €
+            </div>
+
+            <div>
+                {{ meal_object.description}}
+            </div>
+
+            <div class="text-warnong display">
+                <a href="#"> <button class="btn btn-succes">Acheter</button></a>
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}

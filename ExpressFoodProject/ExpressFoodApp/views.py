@@ -15,3 +15,7 @@ def index(request):
     meal_object = paginator.get_page(page)
     return render(request, 'expressFoodTemplates/index.html',{'meal_object': meal_object})
 
+
+def detail(request, myid):
+    meal_object = Meal.objects.get(id=myid)
+    return render(request, 'expressFoodTemplates/detail.html', {'meal_object': meal_object})
