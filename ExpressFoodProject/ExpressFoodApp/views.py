@@ -1,9 +1,10 @@
 from django.shortcuts import render
-
+from .models import Meal
 # Create your views here.
 from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-    return HttpResponse("<h1>Hello and welcome to my first <u>Django App</u> project!</h1>")
+    meal_object = Meal.objects.all()
+    return render(request, 'expressFoodTemplates/index.html',{'meal_object': meal_object})
 
