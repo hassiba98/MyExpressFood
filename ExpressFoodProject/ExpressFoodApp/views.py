@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Meal
+from django.core.paginator import Paginator
 # Create your views here.
 from django.http import HttpResponse
 
@@ -9,5 +10,8 @@ def index(request):
     item_name =  request.GET.get('item-name')
     if item_name !='' and item_name is not None:
         meal_object = Meal.objects.filter(title__icontains=item_name)
+    paginator = Paginator(meal_object, 8)
+    page = request.GET.get('page')
+    meal_object = paginator.get_page(page)
     return render(request, 'expressFoodTemplates/index.html',{'meal_object': meal_object})
 
