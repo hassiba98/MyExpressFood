@@ -20,11 +20,11 @@
         <div class="card">
             <img src="{{meal.image}}"  alt="" class="card-img-top">
             <div class="card-body">
-                <div class="card-title">{{meal.title}}</div>
+                <div id="unique_{{meal.id}}"class="card-title">{{meal.title}}</div>
                 <div class="card-text">{{meal.price}} €</div>
                 <a href="{{ meal.id }}"> Voir </a>
 
-                <button class="btn btn-succes"> Ajouter</button>
+                <button id="{{ meal.id }}" class="btn panierClass btn-succes"> Ajouter</button>
             </div>
         </div>
     </div>
@@ -55,4 +55,49 @@
         </ul>
     </div>
 </row>
+{% endblock %}
+
+{% block js %}
+ <script type="text/javascript">
+     console.log('Juste pour teset');
+     if(localStorage.getItem('panier')==null){
+         var panier = {};
+     }else {
+         panier = JSON.parse(localStorage.getItem('panier'));
+     }
+     $(document).on('click', '.panierClass', function (){
+         console.log('ajouter');
+         var item_id =  this.id.toString();
+         console.log(item_id);
+         if(panier[item_id] != undefined){
+             panier[item_id] = panier[item_id] + 1;
+         }else{
+             panier[item_id] = 1;
+         }
+         console.log(panier);
+         localStorage.setItem('panier', JSON.stringify(panier));
+         document.getElementById("nb_repas_choisi").innerHTML = "Panier("+Object.keys(panier).length + ")";
+
+     });
+        AfficherList(panier);
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+     document.getElementById("nb_repas_choisi").setAttribute(('data-bs-content', "?"))
+
+
+      function AfficherList(panier){
+        var panierString = "";
+        panierString += "Voici votree liste";
+        var index = 1;
+        for(var x in panier){
+            panierString += index;
+            panierString += document.getElementById("unique_"+x).innerHTML + "Qte" + panier[x];
+            index +=1;
+        }
+        document.querySelectorAll('[data-bs-toggle="popover"]')
+        document.getElementById("unique_x").setAttribute(('data-bs-content', "hiii?"))
+
+    }
+
+
+ </script>
 {% endblock %}
