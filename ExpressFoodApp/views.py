@@ -19,3 +19,6 @@ def index(request):
 def detail(request, myid):
     meal_object = Meal.objects.get(id=myid)
     return render(request, 'expressFoodTemplates/detail.html', {'meal_object': meal_object})
+
+def checkout(request):
+    return render(request, 'expressFoodTemplates/checkout.html')
