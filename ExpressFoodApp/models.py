@@ -28,7 +28,7 @@ class Meal (models.Model):
         return self.title
 
 class Commande (models.Model):
-    items = models.CharField(max_length=300)
+    items = models.CharField(max_length=300, blank=True)
     nom = models.CharField(max_length=300)
     prenom = models.CharField(max_length=300)
     email = models.EmailField()
@@ -39,4 +39,6 @@ class Commande (models.Model):
 
     class Meta:
         ordering = ['-date_commande']
+    def __str__(self):
+        return self.nom+" "+self.prenom
 
