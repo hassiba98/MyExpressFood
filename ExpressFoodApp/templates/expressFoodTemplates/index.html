@@ -11,6 +11,7 @@
                 <div class="col-auto">
                     <button type="submit" class="btn btn-success">Recherche</button>
                 </div>
+                </br>
             </form>
         </div>
     </div>
@@ -21,7 +22,7 @@
             <img src="{{meal.image}}"  alt="" class="card-img-top">
             <div class="card-body">
                 <div id="unique_{{meal.id}}"class="card-title">{{meal.title}}</div>
-                <div class="card-text">{{meal.price}} €</div>
+                <div id="price_{{ meal.id }}" class="card-text">{{meal.price}} €</div>
                 <a href="{{ meal.id }}"> Voir </a>
 
                 <button id="{{ meal.id }}" class="btn panierClass btn-succes"> Ajouter</button>
@@ -72,10 +73,12 @@
          if(panier[item_id] != undefined){
              quantite = panier[item_id][0] +1;
              panier[item_id][0] = quantite;
+             panier[item_id][2] += parseFloat(document.getElementById("price_"+item_id).innerHTML);
          }else{
              quantite = 1;
+             prix = parseFloat(document.getElementById("price_"+item_id).innerHTML);
              nom =  document.getElementById("unique_"+item_id).innerHTML;
-             panier[item_id] = [quantite, nom];
+             panier[item_id] = [quantite, nom, prix];
          }
          console.log(panier);
          localStorage.setItem('panier', JSON.stringify(panier));
@@ -88,9 +91,9 @@
          var panierString = "";
          panierString += "<h4>Voici votre liste</h4>";
          var index = 1;
-          for(var X in panier){
+          for(var x in panier){
               panierString += index + "- ";
-              panierString += document.getElementById("unique_"+X).innerHTML + "  Qte: " + panier[X][0] + "</br>";
+              panierString += document.getElementById("unique_"+x).innerHTML+"  Qte: "+panier[x][0]+"</br>";
               index +=1;
              }
           panierString += "<a href='/checkout' class='btn btn-primary'>Checkout</a>";

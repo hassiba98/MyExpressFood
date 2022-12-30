@@ -36,6 +36,7 @@ class Commande (models.Model):
     ville = models.CharField(max_length=200)
     zipcode = models.CharField(max_length=300)
     date_commande = models.DateTimeField(auto_now=True)
+    total = models.CharField(max_length=300)
 
     class Meta:
         ordering = ['-date_commande']

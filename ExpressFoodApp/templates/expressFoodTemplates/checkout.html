@@ -17,6 +17,7 @@
         <div class="col-md-12">
             <form method="POST">
                 {% csrf_token %}
+                <input type="hidden",id="items" name="items">
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Nom</label>
@@ -54,6 +55,10 @@
       <label for="inputZip">Code postale</label>
       <input name="zipcode" id="zipcode" type="text" class="form-control" id="inputZip">
     </div>
+       <div class="form-group col-md-2">
+      <label for="inputZip">Somme totale à payer :</label>
+      <input name="total" id="total" type="readonly" class="bg-dark text-warning form-control">
+    </div>
   </div>
   <div class="form-group">
 
@@ -76,14 +81,33 @@
          panier = JSON.parse(localStorage.getItem('panier'));
      }
 
+     var total = 0;
+     var nombre = 0;
+
+
+
      for(item in panier) {
+         let prix = panier[item][2];
          let nom = panier[item][1];
          let quantite = panier[item][0];
+         nombre += quantite;
+         total += prix;
          let itemString = `<li class="list-group-item d-flex justify-content-between align-items-center"> ${nom}
-    <span class="badge badge-primary badge-pill">QTE: ${quantite}</span>
+    <span class="badge badge-primary badge-pill">${quantite}</span>
+    <span class="badge badge-warning badge-pill">${prix} €</span>
   </li>`;
          $('#itemList').append(itemString);
      }
+
+
+     let itemNombre = `<li class="list-group-item d-flex justify-content-between align-items-center"><b class="badge badge-danger"> PRIX ET QUANTITE TOTALE:</b>
+    <span class="badge badge-danger badge-pill">TQTE: ${nombre}</span>
+    <span class="badge badge-danger badge-pill">TOTAL: ${total} € </span>
+  </li>`;
+     $('#itemList').append(itemNombre);
+     $('#total').val(total+"€");
+
+     $('#items').val(JSON.stringify(panier));
 
     </script>
 {%  endblock %}

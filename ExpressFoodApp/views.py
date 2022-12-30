@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Meal, Commande
 from django.core.paginator import Paginator
 # Create your views here.
@@ -23,6 +23,7 @@ def detail(request, myid):
 
 def checkout(request):
     if request.method == "POST":
+        items = request.POST.get('items')
         nom = request.POST.get('nom')
         prenom = request.POST.get('prenom')
         email = request.POST.get('email')
@@ -30,7 +31,13 @@ def checkout(request):
         ville = request.POST.get('ville')
         pays = request.POST.get('pays')
         zipcode = request.POST.get('zipcode')
-        com = Commande(nom=nom, prenom=prenom, email=email, adress=adress, ville=ville, pays=pays, zipcode=zipcode)
+        total = request.POST.get('total')
+        com = Commande(items=items, nom=nom, prenom=prenom , email=email, adress=adress, ville=ville, pays=pays, zipcode=zipcode, total=total)
         com.save()
+        return redirect('confirmation')
 
     return render(request, 'expressFoodTemplates/checkout.html')
+
+def confirmation (request):
+    return render(request, 'expressFoodTemplates/confirmation.html')
+
